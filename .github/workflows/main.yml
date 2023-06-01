@@ -1,0 +1,40 @@
+name: Commit action
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # This will run the action every day at 00:00 UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install art  # Add this line to install 'art'
+
+    - name: Read start date and text
+      id: vars
+      run: |
+        echo "::set-output name=start_date::$(cat start_date.txt)"
+        echo "::set-output name=text::$(cat text.txt)"
+
+    - name: Run script
+      run: python generate_commit_dates.py "${{ steps.vars.outputs.start_date }}" "${{ steps.vars.outputs.text }}"
+
+    - name: Commit files
+      run: |
+        git config --local user.email "wangzhenjjcn@gmail.com"
+        git config --local user.name "Wang ZHen"
+        while read date; do
+          git commit --allow-empty -m "Commit for $date"
+        done < dates.txt
+        git push
