@@ -4,7 +4,7 @@ import os
 import datetime
 from art import *
 
-def generate_dates(start_date, text):
+def generate_dates(start_date, text, intensity):
     ascii_art = text2art(text) # Generate ASCII art from text
     ascii_art = ascii_art.split('\n')
     
@@ -22,7 +22,8 @@ def generate_dates(start_date, text):
                 if start_date <= date < end_date:
                     # Add the date multiple times to create different intensities
                     intensity = 255 - ord(ascii_art[row][col])
-                    dates_to_commit.extend([date] * intensity)
+                    for _ in range(intensity):
+                        dates_to_commit.append(date)
     
     return dates_to_commit
 
@@ -31,8 +32,9 @@ if __name__ == "__main__":
 
     start_date = sys.argv[1]
     text = sys.argv[2]
+    intensity = int(sys.argv[3])
 
-    dates_to_commit = generate_dates(start_date, text)
+    dates_to_commit = generate_dates(start_date, text, intensity)
 
     # Write dates to a file
     with open('dates.txt', 'w') as file:
