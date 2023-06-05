@@ -21,9 +21,10 @@ def generate_dates(start_date, text, intensity):
                 date = start_date + datetime.timedelta(weeks=col, days=row)
                 if start_date <= date < end_date:
                     # Add the date multiple times to create different intensities
-                    intensity = 255 - ord(ascii_art[row][col])
-                    for _ in range(intensity):
+                    if ascii_art[row][col] != ' ':
+                    for _ in range(10): # Add the date 10 times
                         dates_to_commit.append(date)
+
     
     return dates_to_commit
 
