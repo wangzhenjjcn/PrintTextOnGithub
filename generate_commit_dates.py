@@ -22,7 +22,7 @@ def generate_dates(start_date, text, intensity):
                 if start_date <= date < end_date:
                     # Add the date multiple times to create different intensities
                     if ascii_art[row][col] != ' ':
-                        for _ in range(10): # Add the date 10 times
+                        for _ in range(15): # Add the date 10 times
                             dates_to_commit.append(date)
 
     
