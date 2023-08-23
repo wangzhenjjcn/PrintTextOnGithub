@@ -2,7 +2,7 @@ name: Execute SSH Command
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  #
+    - cron: '*/2 * * * *'  #
 
 jobs:
   execute-command:
