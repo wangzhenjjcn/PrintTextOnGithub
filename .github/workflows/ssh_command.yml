@@ -2,7 +2,7 @@ name: Execute SSH Command
 
 on:
   schedule:
-    - cron: '*/2 * * * *'  #
+    - cron: '0 0 * * *'  #
 
 jobs:
   execute-command:
@@ -13,7 +13,7 @@ jobs:
 
     - name: Execute SSH command
       env:
-        SERVER_DOMAIN:  ${{ secrets.SERVER_DOMAIN }}
+        SERVER_DOMAIN:  ${{secrets.SERVER_DOMAIN}}
         SERVER_PORT:  ${{ secrets.SERVER_PORT }}
         SERVER_USER:  ${{ secrets.SERVER_USER }}
         SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
