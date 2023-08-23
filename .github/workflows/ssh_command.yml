@@ -1,0 +1,23 @@
+name: Execute SSH Command
+
+on:
+  schedule:
+    - cron: '0/5 * * * *'  #
+
+jobs:
+  execute-command:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Execute SSH command
+      env:
+        SERVER_DOMAIN:  ${{ secrets.SERVER_DOMAIN }}
+        SERVER_PORT:  ${{ secrets.SERVER_PORT }}
+        SERVER_USER:  ${{ secrets.SERVER_USER }}
+        SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      run: |
+        sudo apt-get install -y sshpass
+        command=$(cat data/ssh.txt)
+        sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no -p $SERVER_PORT $SERVER_USER@$SERVER_DOMAIN "$command"
